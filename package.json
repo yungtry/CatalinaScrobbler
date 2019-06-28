@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "MacOS Catalina Last.fm Scrobbler",
   "main": "CatalinaScrobbler.js",
+  "bin": "./CatalinaScrobbler.js",
   "scripts": {
     "test": "node CatalinaScrobbler.js"
   },
@@ -12,5 +13,8 @@
     "lastfmapi": "^0.1.1",
     "prompt-password": "^1.2.0",
     "simple-lastfm": "^1.0.5"
+  },
+  "pkg": {
+    "assets": "CurrentPlaying.scpt"
   }
 }
