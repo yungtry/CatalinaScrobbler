@@ -1,0 +1,16 @@
+{
+  "name": "catalina-scrobbler",
+  "version": "1.0.0",
+  "description": "MacOS Catalina Last.fm Scrobbler",
+  "main": "CatalinaScrobbler.js",
+  "scripts": {
+    "test": "node CatalinaScrobbler.js"
+  },
+  "author": "github.com/yungtry",
+  "license": "Unlicense",
+  "dependencies": {
+    "lastfmapi": "^0.1.1",
+    "prompt-password": "^1.2.0",
+    "simple-lastfm": "^1.0.5"
+  }
+}
