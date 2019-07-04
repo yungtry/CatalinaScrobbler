@@ -1,11 +1,11 @@
 const fs = require('fs');
 fs.writeFile("/tmp/CurrentPlaying.scpt", `on run
 	set info to ""
-	tell application "System Events"
-		set num to count (every process whose name is "Music")
+	tell application id "com.apple.systemevents"
+		set num to count (every process whose bundle identifier is "com.apple.Music")
 	end tell
 	if num > 0 then
-		tell application "Music"
+		tell application id "com.apple.Music"
 			if player state is playing then
 				set track_name to name of current track
 				set track_artist to the artist of the current track
@@ -78,6 +78,7 @@ function update(lfm) {
 		exec('osascript /tmp/CurrentPlaying.scpt', (error, stdout, stderr) => {
 			if (error) {
 			  console.error(`exec error: ${error}`);
+			  console.log("Is music playing?")
 			  global.timeline -= 1; //pause cause not playing anything
 			  //global.songCount = 0; //scrobble reset
 			  return;
