@@ -5,11 +5,11 @@ const open = require('open');
 
  
 app.on('ready', () => {
-	osascript.execute("set the Response to display dialog \"Login:\" default answer \"\" with icon note buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
+	osascript.execute("set the Response to display dialog \"Last.fm username:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
 		if (err) return console.error(err)
 		//console.log(result, raw)
 		login["text returned"];
-		osascript.execute("set the Response to display dialog \"Password:\" default answer \"\" with icon note buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw){
+		osascript.execute("set the Response to display dialog \"Last.fm password:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw){
 		  if (err) return console.error(err)
 		  //console.log(result, raw)
 		  password["text returned"];
