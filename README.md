@@ -1,4 +1,6 @@
 # CatalinaScrobbler
+![preview](https://i.imgur.com/XhqS1UB.png)
+
 Warning! This repository is intended only for use within the macOS Catalina.
 
 ## Running
