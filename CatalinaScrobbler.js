@@ -1,4 +1,45 @@
+var osascript = require('node-osascript');
+const { app, Menu, Tray } = require('electron');
 const fs = require('fs');
+const open = require('open');
+
+ 
+app.on('ready', () => {
+	osascript.execute("set the Response to display dialog \"Last.fm username:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
+		if (err) return console.error(err)
+		//console.log(result, raw)
+		login["text returned"];
+		osascript.execute("set the Response to display dialog \"Last.fm password:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw){
+		  if (err) return console.error(err)
+		  //console.log(result, raw)
+		  password["text returned"];
+		  gui(login["text returned"]);
+		  lastFMLogin(login["text returned"], password["text returned"]);
+		});
+	  });
+})
+async function gui(login){
+	let tray = null
+	//defaults read -g AppleInterfaceStyle
+	tray = new Tray(__dirname + '/icons/trayTemplate.png')
+	setInterval(function(){
+		if (global.artist === undefined) {
+			var state = "Paused";
+		}
+		else {
+			var state = 'Playing: '+global.artist+' - '+global.track;
+		}
+			const contextMenu = Menu.buildFromTemplate([
+				{ label: state, click: (item, window, event) => {
+					open('http://last.fm/user/'+login);
+				}},
+				{ label: 'Quit', role: "quit"}
+			])
+			tray.setContextMenu(contextMenu)
+	}, 5000)
+	app.dock.hide();
+}
+
 fs.writeFile("/tmp/CurrentPlaying.scpt", `on run
 	set info to ""
 	tell application id "com.apple.systemevents"
@@ -28,7 +69,7 @@ var readline = require('readline');
 
 global.timeline = 0
 global.songCount = 0;
-
+/*
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -46,7 +87,7 @@ rl.question('Login: ', (login) => {
 		rl.close();
 	  });
 });
-
+*/
 function lastFMLogin(login, pass){
 	var lfm = new LastfmAPI({
 		'api_key' : '21779adaae15c5fa727a08cd75909df2',
@@ -118,6 +159,8 @@ function update(lfm) {
 			}
 
 			if (stdout != undefined){
+				global.artist = obj.artist;
+				global.track = obj.track;
 				lfm.track.updateNowPlaying({
 					'artist' : obj.artist,
 					'track' : obj.track,
@@ -130,7 +173,6 @@ function update(lfm) {
 		});
 	}, 5000);
 }
-
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
     process.exit();
