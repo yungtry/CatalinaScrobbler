@@ -1,5 +1,5 @@
 # CatalinaScrobbler
-![preview](https://i.imgur.com/XhqS1UB.png)
+![preview](https://github.com/yungtry/CatalinaScrobbler/blob/dev/test/screenshot.png?raw=true)
 
 Warning! This repository is intended only for use within the macOS Catalina.
 
