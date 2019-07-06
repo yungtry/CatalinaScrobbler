@@ -1,6 +1,6 @@
 {
   "name": "catalina-scrobbler",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "MacOS Catalina Last.fm Scrobbler",
   "main": "CatalinaScrobbler.js",
   "bin": "./CatalinaScrobbler.js",
@@ -11,10 +11,16 @@
   "license": "Unlicense",
   "dependencies": {
     "lastfmapi": "^0.1.1",
+    "node-osascript": "^2.1.0",
+    "open": "^6.4.0",
     "prompt-password": "^1.2.0",
     "simple-lastfm": "^1.0.5"
   },
   "pkg": {
     "assets": "CurrentPlaying.scpt"
+  },
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-packager": "^14.0.1"
   }
 }
