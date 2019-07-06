@@ -1,8 +1,8 @@
 var osascript = require('node-osascript');
 const { app, Menu, Tray } = require('electron');
-const runJXA = require('run-jxa');
 const fs = require('fs');
 const open = require('open');
+
  
 app.on('ready', () => {
 	osascript.execute("set the Response to display dialog \"Login:\" default answer \"\" with icon note buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
@@ -21,33 +21,22 @@ app.on('ready', () => {
 async function gui(login){
 	let tray = null
 	//defaults read -g AppleInterfaceStyle
-		isDarkMode().then((result) => {
-			console.log(result);
-			if (result) {
-				var icon_type = "dark";
-			}
-			else {
-				var icon_type = "light";
-			}
-		
-			tray = new Tray(__dirname + '/icons/icon_small_'+icon_type+'.png')
-			setInterval(function(){
-				if (global.artist === undefined) {
-					var state = "Paused";
-				}
-				else {
-					var state = 'Playing: '+global.artist+' - '+global.track;
-				}
-				const contextMenu = Menu.buildFromTemplate([
+	tray = new Tray(__dirname + '/icons/trayTemplate.png')
+	setInterval(function(){
+		if (global.artist === undefined) {
+			var state = "Paused";
+		}
+		else {
+			var state = 'Playing: '+global.artist+' - '+global.track;
+		}
+			const contextMenu = Menu.buildFromTemplate([
 				{ label: state, click: (item, window, event) => {
 					open('http://last.fm/user/'+login);
-				}
-				},
+				}},
 				{ label: 'Quit', role: "quit"}
-				])
-				tray.setContextMenu(contextMenu)
-			}, 5000)
-		});
+			])
+			tray.setContextMenu(contextMenu)
+	}, 5000)
 	app.dock.hide();
 }
 
@@ -188,25 +177,3 @@ process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
     process.exit();
 });
-
-const PROP = `Application('System Events').appearancePreferences.darkMode`;
-
-function isDarkMode() {
-  let isMac = process.platform === 'darwin';
-  let result = new Promise(resolve => {
-    if (isMac === true) {
-      return resolve(runJXA(`return ${PROP}()`));
-    }
-    if (isMac === false) {
-      return resolve(false);
-    }
-  });
-
-  return result
-    .then(value => {
-      return value;
-    })
-    .catch(error => {
-      return error;
-    });
-}
