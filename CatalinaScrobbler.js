@@ -3,13 +3,12 @@ const { app, Menu, Tray } = require('electron');
 const fs = require('fs');
 const open = require('open');
 
- 
 app.on('ready', () => {
-	osascript.execute("set the Response to display dialog \"Last.fm username:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
+	osascript.execute("set the Response to display dialog \"Last.fm username:\" default answer \"\" with icon {\""+__dirname+"/assets/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw){
 		if (err) return console.error(err)
 		//console.log(result, raw)
 		login["text returned"];
-		osascript.execute("set the Response to display dialog \"Last.fm password:\" default answer \"\" with icon {\""+__dirname+"/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw){
+		osascript.execute("set the Response to display dialog \"Last.fm password:\" default answer \"\" with icon {\""+__dirname+"/assets/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw){
 		  if (err) return console.error(err)
 		  //console.log(result, raw)
 		  password["text returned"];
@@ -18,10 +17,11 @@ app.on('ready', () => {
 		});
 	  });
 })
+
 async function gui(login){
 	let tray = null
 	//defaults read -g AppleInterfaceStyle
-	tray = new Tray(__dirname + '/icons/trayTemplate.png')
+	tray = new Tray(__dirname + '/assets/icons/trayTemplate.png')
 	setInterval(function(){
 		if (global.artist === undefined) {
 			var state = "Paused";
@@ -40,26 +40,44 @@ async function gui(login){
 	app.dock.hide();
 }
 
-fs.writeFile("/tmp/CurrentPlaying.scpt", `on run
-	set info to ""
-	tell application id "com.apple.systemevents"
-		set num to count (every process whose bundle identifier is "com.apple.Music")
-	end tell
-	if num > 0 then
-		tell application id "com.apple.Music"
-			if player state is playing then
-				set track_name to name of current track
-				set track_artist to the artist of the current track
-				set track_album to the album of the  current track
-			end if
+osascript.execute(`try
+    tell application "Finder" to get application file id "com.apple.Music"
+    set appExists to true
+on error
+    set appExists to false
+end try
+return appExists`, function(err, result){
+	if (result == true) {
+		var app = "Music";
+	}
+	else if (result == false){
+		var app = "iTunes"
+	}
+	else { //just in case something does not work
+		var app = "Music";
+	}
+	console.log("App detected: "+app);
+	fs.writeFile("/tmp/CurrentPlaying.scpt", `on run
+		set info to ""
+		tell application id "com.apple.systemevents"
+			set num to count (every process whose bundle identifier is "com.apple.`+app+`")
 		end tell
-	end if
-	return "{\\"artist\\":\\"" & track_artist & "\\", \\"track\\":\\"" & track_name & "\\", \\"album\\":\\"" & track_album & "\\"}"
-end run`, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-}); 
+		if num > 0 then
+			tell application id "com.apple.`+app+`"
+				if player state is playing then
+					set track_name to name of current track
+					set track_artist to the artist of the current track
+					set track_album to the album of the  current track
+				end if
+			end tell
+		end if
+		return "{\\"artist\\":\\"" & track_artist & "\\", \\"track\\":\\"" & track_name & "\\", \\"album\\":\\"" & track_album & "\\"}"
+	end run`, function(err) {
+		if(err) {
+			return console.log(err);
+		}
+	}); 
+});
 
 var LastfmAPI = require('lastfmapi');
 var Lastfm = require('simple-lastfm');
