@@ -13,7 +13,6 @@
     "lastfmapi": "^0.1.1",
     "node-osascript": "^2.1.0",
     "open": "^6.4.0",
-    "prompt-password": "^1.2.0",
     "simple-lastfm": "^1.0.5"
   },
   "pkg": {

@@ -10,11 +10,11 @@ const open = require('open');
 app.on('ready', () => {
     osascript.execute("set the Response to display dialog \"Last.fm username:\" default answer \"\" with icon {\"" + __dirname + "/assets/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, login, raw) {
         if (err) return console.error(err)
-        //console.log(result, raw)
+        //log(result, raw)
         global.login = login["text returned"];
         osascript.execute("set the Response to display dialog \"Last.fm password:\" default answer \"\" with icon {\"" + __dirname + "/assets/icons/icon.icns\"} buttons {\"Cancel\", \"Continue\"} default button \"Continue\"", function(err, password, raw) {
             if (err) return console.error(err)
-            //console.log(result, raw)
+            //log(result, raw)
             password["text returned"];
             lastFMLogin(login["text returned"], password["text returned"]);
         });
@@ -55,7 +55,7 @@ return appExists`, function(err, result) {
         } else { //just in case something does not work
             var app = "Music";
         }
-        console.log("App detected: " + app);
+        log("App detected: " + app);
         fs.writeFile("/tmp/CurrentPlaying.scpt", `on run
 		set info to ""
 		tell application id "com.apple.systemevents"
@@ -73,7 +73,7 @@ return appExists`, function(err, result) {
 		return "{\\"artist\\":\\"" & track_artist & "\\", \\"track\\":\\"" & track_name & "\\", \\"album\\":\\"" & track_album & "\\"}"
 	end run`, function(err) {
             if (err) {
-                return console.log(err);
+                return log(err);
             }
         });
     });
@@ -83,30 +83,10 @@ return appExists`, function(err, result) {
     const {
         exec
     } = require('child_process');
-    var Prompt = require('prompt-password');
-    var readline = require('readline');
 
     global.timeline = 0
-    global.songCount = 0;
-    /*
-    var rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-    rl.stdoutMuted = true;
-    rl.question('Login: ', (login) => {
-    	var prompt = new Prompt({
-    	  type: 'password',
-    	  message: 'Password: ',
-    	  name: 'password'
-    	});
-    	prompt.run()
-    	  .then(function(password) {
-    		lastFMLogin(login, password);
-    		rl.close();
-    	  });
-    });
-    */
+	global.songCount = 0;
+	
     function lastFMLogin(login, pass) {
         var lfm = new LastfmAPI({
             'api_key': '21779adaae15c5fa727a08cd75909df2',
@@ -119,12 +99,12 @@ return appExists`, function(err, result) {
             password: pass
         });
         lastfm.getSessionKey(function(result) {
-            //console.log("session key = " + result.session_key);
+            //log("session key = " + result.session_key);
             if (result.success) {
                 lfm.setSessionCredentials(login, result.session_key);
                 update(lfm);
             } else {
-                console.log("Error: " + result.error);
+                log("Error: " + result.error);
             }
         });
     }
@@ -132,27 +112,27 @@ return appExists`, function(err, result) {
     function update(lfm) {
 
         setInterval(function() {
-            console.log("==============================");
+            log("==============================");
             global.timeline += 1;
-            console.log("Loop: " + global.timeline);
+            log("Loop: " + global.timeline);
             exec('osascript /tmp/CurrentPlaying.scpt', (error, stdout, stderr) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
-                    console.log("Is music playing?")
+                    log("Is music playing?")
 
                     global.timeline -= 1; //pause cause not playing anything
                     //global.songCount = 0; //scrobble reset
                     return;
                 }
-                console.log(`Now Playing: ${stdout}`);
-                //console.log(`stderr: ${stderr}`);
+                log(`Now Playing: ${stdout}`);
+                //log(`stderr: ${stderr}`);
                 var obj = JSON.parse(stdout);
 
                 if (stdout != undefined && stdout != global.playing) {
                     //song changed
                     //tray update every song
-                    console.log(obj.artist);
-                    console.log(obj.track)
+                    log(obj.artist);
+                    log(obj.track)
                     var state = 'Playing: ' + obj.artist + ' - ' + obj.track;
                     const contextMenu = Menu.buildFromTemplate([{
                             label: state,
@@ -171,22 +151,22 @@ return appExists`, function(err, result) {
                     global.timeline = 0;
                     global.songCount += 1;
                     global.previous = global.playing;
-                    console.log("SongCount: " + global.songCount);
+                    log("SongCount: " + global.songCount);
                     if (global.songCount > 1) {
-                        console.log("Previous: " + global.previous);
+                        log("Previous: " + global.previous);
                         var previousSong = JSON.parse(global.previous);
                         if (global.previousTime > 12) { //if listened for more than 60 seconds
-                            console.log("Scrobble Previous");
+                            log("Scrobble Previous");
                             lfm.track.scrobble({
                                 'artist': previousSong.artist,
                                 'track': previousSong.track,
                                 'timestamp': Math.floor(Date.now() / 1000)
                             }, function(err, scrobbles) {
                                 if (err) {
-                                    return console.log('We\'re in trouble', err);
+                                    return log('We\'re in trouble', err);
                                 }
 
-                                console.log('We have just scrobbled:', scrobbles);
+                                log('We have just scrobbled:', scrobbles);
                             });
                         }
                         global.playing = stdout;
@@ -219,13 +199,19 @@ return appExists`, function(err, result) {
                         'album': obj.album
 
                     }, function(err, nowPlaying) {
-                        console.log(nowPlaying);
+                        log(nowPlaying);
                     })
                 }
             });
         }, 5000);
     }
 })
+function log(input){
+	if (!__dirname.includes("CatalinaScrobbler.app")){
+		console.log(input);
+	}
+}
+
 process.on('SIGINT', function() {
     console.log("Caught interrupt signal");
     process.exit();
