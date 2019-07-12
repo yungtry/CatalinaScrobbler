@@ -1,9 +1,9 @@
 # CatalinaScrobbler
 ![preview](https://github.com/yungtry/CatalinaScrobbler/blob/dev/test/screenshot.png?raw=true)
 
-Warning! This repository is intended only for use within the macOS Catalina.
+🎵⭐ This application support both Apple Music and iTunes scrobbling to Last.Fm
 
-## Running
+## 🔧 Running
 ### Automatic (pre-built)
 1. Download the latest release from here: https://github.com/yungtry/CatalinaScrobbler/releases
 2. Either double click the icon or run it from a terminal
@@ -16,7 +16,7 @@ Warning! This repository is intended only for use within the macOS Catalina.
 4. ```electron CatalinaScrobbler.js```
 5. (Optional) Convert it to an executable using electron-packager ```npm i electron-packager -g``` and then ```sh scripts/build.sh```
 
-## Bugs and issues
+## 🐛 Bugs and issues
 This repository consists of lot of bugs and issues and its code is ugly. I will try to maintain it for as longer as there is no other alternative.
 
 ## License
