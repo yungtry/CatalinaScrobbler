@@ -1,7 +1,7 @@
 {
-  "name": "catalina-scrobbler",
-  "version": "1.0.3",
-  "description": "MacOS Catalina Last.fm Scrobbler",
+  "name": "CatalinaScrobbler",
+  "version": "1.0.4",
+  "description": "macOS Catalina Last.fm Scrobbler",
   "main": "CatalinaScrobbler.js",
   "bin": "./CatalinaScrobbler.js",
   "scripts": {
