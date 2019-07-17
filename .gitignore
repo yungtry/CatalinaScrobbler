@@ -1,6 +1,7 @@
 node_modules/
 *.DS_Store*
 CatalinaScrobbler-darwin-x64/
+CatalinaScrobbler-cli
 
 # Logs
 logs

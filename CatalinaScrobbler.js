@@ -1,10 +1,7 @@
 var osascript = require('node-osascript');
-const {
-    app,
-    Menu,
-    Tray
-} = require('electron');
+const {app,Menu,Tray} = require('electron');
 const fs = require('fs');
+const dJSON = require('dirty-json'); //Applescript which I made below has trouble generating proper JSON.
 const open = require('open');
 
 app.on('ready', () => {
@@ -20,7 +17,6 @@ app.on('ready', () => {
         });
     });
     let tray = null
-    //defaults read -g AppleInterfaceStyle
     tray = new Tray(__dirname + '/assets/icons/trayTemplate.png')
     if (global.artist === undefined) {
         var state = "Paused";
@@ -52,7 +48,7 @@ return appExists`, function(err, result) {
             var app = "Music";
         } else if (result == false) {
             var app = "iTunes"
-        } else { //just in case something does not work
+        } else { // Just in case something does not work.
             var app = "Music";
         }
         log("App detected: " + app);
@@ -99,7 +95,6 @@ return appExists`, function(err, result) {
             password: pass
         });
         lastfm.getSessionKey(function(result) {
-            //log("session key = " + result.session_key);
             if (result.success) {
                 lfm.setSessionCredentials(login, result.session_key);
                 update(lfm);
@@ -121,12 +116,11 @@ return appExists`, function(err, result) {
                     log("Is music playing?")
 
                     global.timeline -= 1; //pause cause not playing anything
-                    //global.songCount = 0; //scrobble reset
                     return;
                 }
                 log(`Now Playing: ${stdout}`);
                 //log(`stderr: ${stderr}`);
-                var obj = JSON.parse(stdout);
+                var obj = dJSON.parse(stdout);
 
                 if (stdout != undefined && stdout != global.playing) {
                     //song changed
@@ -154,7 +148,7 @@ return appExists`, function(err, result) {
                     log("SongCount: " + global.songCount);
                     if (global.songCount > 1) {
                         log("Previous: " + global.previous);
-                        var previousSong = JSON.parse(global.previous);
+                        var previousSong = dJSON.parse(global.previous);
                         if (global.previousTime > 12) { //if listened for more than 60 seconds
                             log("Scrobble Previous");
                             lfm.track.scrobble({

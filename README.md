@@ -10,11 +10,18 @@
 3. Login to your account and start scrobbling
 
 ### Manual
+#### GUI
 1. Clone the repository
 2. ```npm install```
 3. ```npm i electron -g```
 4. ```electron CatalinaScrobbler.js```
 5. (Optional) Convert it to an executable using electron-packager ```npm i electron-packager -g``` and then ```sh scripts/build.sh```
+
+#### CLI
+1. Clone the repository
+2. ```npm install```
+3. ```node CatalinaScrobbler-cli.js```
+4. (Optional) Convert it to an executable using nexe ```npm i nexe -g``` and then ```sh scripts/build-cli.sh```
 
 ## 🐛 Bugs and issues
 This repository consists of lot of bugs and issues and its code is ugly. I will try to maintain it for as longer as there is no other alternative.
