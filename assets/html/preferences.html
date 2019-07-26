@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Preferences</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../photon/css/photon.min.css">
+    <style>
+      .pane {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <!-- Javascript -->
+    <script>
+    const { ipcRenderer } = require('electron')
+    function check() {
+      var remember = document.getElementById("remember");
+      var startup = document.getElementById("startup");
+
+      if (remember.checked === true) {
+        console.log("remember true");
+        ipcRenderer.send('window2-event', "rememberTrue");
+      }
+      else {
+        console.log("remember false");
+        ipcRenderer.send('window2-event', "rememberFalse");
+      }
+      if (startup.checked === true){
+        console.log("startup true");
+        ipcRenderer.send('window2-event', "startupTrue");
+      }
+      else {
+        console.log("startup false");
+        ipcRenderer.send('window2-event', "startupFalse");
+      }
+    }
+    function closeWindow() {
+      ipcRenderer.send('window2-event', "preferencesClose");
+    }
+    </script>
+  </head>
+  <body>
+    <div class="window">
+
+      <!-- .toolbar-header sits at the top of your app -->
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="pane-group">
+            <div class="pane">
+              <img src="../icons/icon.png" height="50px" width="50px">
+              <h1>CatalinaScrobbler</h1>
+                <form>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" id="remember" onclick="check()"> Remember my login and password
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" id="startup" onclick="check()"> Run the application on system's startup
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-form btn-default" onclick="closeWindow()">Cancel</button>
+                        <button type="button" class="btn btn-form btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
