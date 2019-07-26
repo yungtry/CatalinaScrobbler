@@ -4,7 +4,12 @@ var win = require('./lib/window');
 
 app.on('ready', function() {
   if (process.platform === "darwin"){
-    app.emit('loginOpen');
+    if (apple.rememberUser() === false){
+      app.emit('loginOpen');
+    }
+    else {
+      app.emit('trayCreate');
+    }
 
     apple.detectPlayer().then(result => {
         apple.replacePlayer(result);
@@ -16,3 +21,5 @@ app.on('ready', function() {
     console.log(process.platform + " is not supported.");
   }
 });
+
+app.on('window-all-closed', e => e.preventDefault() )

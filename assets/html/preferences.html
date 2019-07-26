@@ -17,11 +17,30 @@
     </style>
     <!-- Javascript -->
     <script>
-    const { ipcRenderer } = require('electron')
+    const { ipcRenderer } = require('electron');
+    var apple = require('../../lib/apple.js');
+
+
+    document.addEventListener('DOMContentLoaded',pageLoaded);
+
+    function pageLoaded(){
+      var remember = document.getElementById("remember");
+      var startup = document.getElementById("startup");
+      console.log("Loaded");
+          if (apple.rememberUser() === true) {
+            remember.checked = true;
+          }
+          else if (apple.rememberUser() === false) {
+            
+          }
+          if (apple.autoLaunchEnabled()) {
+            startup.click();
+          }
+    }
+
     function check() {
       var remember = document.getElementById("remember");
       var startup = document.getElementById("startup");
-
       if (remember.checked === true) {
         console.log("remember true");
         ipcRenderer.send('window2-event', "rememberTrue");
@@ -42,6 +61,13 @@
     function closeWindow() {
       ipcRenderer.send('window2-event', "preferencesClose");
     }
+    function save() {
+      var saved = {
+        first: remember.checked,
+        second: remember.checked
+      }
+      ipcRenderer.send('save-event', saved);
+    }
     </script>
   </head>
   <body>
@@ -55,7 +81,7 @@
             <div class="pane">
               <img src="../icons/icon.png" height="50px" width="50px">
               <h1>CatalinaScrobbler</h1>
-                <form>
+                <form id="settings">
                     <div class="checkbox">
                         <label>
                         <input type="checkbox" id="remember" onclick="check()"> Remember my login and password
@@ -68,7 +94,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-form btn-default" onclick="closeWindow()">Cancel</button>
-                        <button type="button" class="btn btn-form btn-primary">Save</button>
+                        <button type="button" class="btn btn-form btn-primary" onclick="save()">Save</button>
                     </div>
                 </form>
             </div>
