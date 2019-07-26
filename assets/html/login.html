@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CatalinaScrobbler Login</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../photon/css/photon.min.css">
+    <style>
+        .pane {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        }
+    </style>
+    <!-- Javascript -->
+    <script>
+        const { ipcRenderer } = require('electron')
+        function okClick(){
+            var data = {
+                state: "loginOK",
+                login: document.getElementById("login").value,
+                password: document.getElementById("password").value
+            }
+            ipcRenderer.send('btn-event', data)
+            document.getElementById('login').disabled = true;
+            document.getElementById('password').disabled = true;
+            document.getElementById('okBtn').disabled = true;
+            document.getElementById('cancelBtn').disabled = true;
+        }
+        ipcRenderer.on('btn-event', (event, arg) => {
+            document.getElementById('login').disabled = false;
+            document.getElementById('password').disabled = false;
+            document.getElementById('okBtn').disabled = false;
+            document.getElementById('cancelBtn').disabled = false;
+            if (arg == "loginTrue") {
+                ipcRenderer.send('window-event', "loginClose");
+            }
+        })
+    </script>
+  </head>
+  <body>
+    <div class="window">
+
+      <!-- .toolbar-header sits at the top of your app -->
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <form onsubmit="return;">
+            <div class="pane-group">
+                <!--<div class="pane"></div>-->
+                <div class="pane">
+                    <center>
+                        <div class="form-group">
+                            <img src="../icons/icon.png" / height="50px" width="50px">
+                        </div>
+                        <div class="form-group">
+                            <label>Last.fm login</label>
+                            <input type="login" class="form-control" id="login" placeholder="Login">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-actions">
+                                <button type="button" class="btn btn-form btn-default" id="cancelBtn" onclick="ipcRenderer.send('btn-event', 'loginCancel')">Cancel</button>
+                                <button type="button" class="btn btn-form btn-primary" id="okBtn" onclick="okClick();">OK</button>
+                        </div>
+                    </center>
+                </div>
+                <!--<div class="pane"></div>-->
+            </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
