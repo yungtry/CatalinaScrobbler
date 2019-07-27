@@ -24,7 +24,10 @@
     function pageLoaded(){
       var remember = document.getElementById("remember");
       var startup = document.getElementById("startup");
+      var saveBtn = document.getElementById("saveBtn");
       console.log("Loaded");
+      startup.disabled = true;
+      saveBtn.disabled = true;
       if (apple.preferencesRememberUser() === true) {
         console.log("I remember you");
         remember.click();
@@ -33,7 +36,12 @@
         console.log("I don't remember you");
       }
       apple.autoLaunchEnabled().then(result =>{
+        startup.disabled = false;
+        saveBtn.disabled = false;
         if (result) { startup.click(); }
+        else {
+
+        }
       })
     }
 
@@ -95,7 +103,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-form btn-default" onclick="closeWindow()">Cancel</button>
-                        <button type="button" class="btn btn-form btn-primary" onclick="save()">Save</button>
+                        <button type="button" class="btn btn-form btn-primary" id="saveBtn" onclick="save()">Save</button>
                     </div>
                 </form>
             </div>
