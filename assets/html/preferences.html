@@ -17,25 +17,24 @@
     </style>
     <!-- Javascript -->
     <script>
-    const { ipcRenderer } = require('electron');
+    const { app, ipcRenderer } = require('electron');
     var apple = require('../../lib/apple.js');
 
-
     document.addEventListener('DOMContentLoaded',pageLoaded);
-
     function pageLoaded(){
       var remember = document.getElementById("remember");
       var startup = document.getElementById("startup");
       console.log("Loaded");
-          if (apple.rememberUser() === true) {
-            remember.checked = true;
-          }
-          else if (apple.rememberUser() === false) {
-            
-          }
-          if (apple.autoLaunchEnabled()) {
-            startup.click();
-          }
+      if (apple.preferencesRememberUser() === true) {
+        console.log("I remember you");
+        remember.click();
+      }
+      else if (apple.preferencesRememberUser() === false) {
+        console.log("I don't remember you");
+      }
+      apple.autoLaunchEnabled().then(result =>{
+        if (result) { startup.click(); }
+      })
     }
 
     function check() {
@@ -62,9 +61,11 @@
       ipcRenderer.send('window2-event', "preferencesClose");
     }
     function save() {
+      var remember = document.getElementById("remember");
+      var startup = document.getElementById("startup");
       var saved = {
         first: remember.checked,
-        second: remember.checked
+        second: startup.checked
       }
       ipcRenderer.send('save-event', saved);
     }

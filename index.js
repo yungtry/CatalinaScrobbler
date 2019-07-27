@@ -14,7 +14,6 @@ app.on('ready', function() {
     apple.detectPlayer().then(result => {
         apple.replacePlayer(result);
     }).catch(error => process.exit())
-
     
   }
   else {
@@ -22,4 +21,5 @@ app.on('ready', function() {
   }
 });
 
+//Prevents application from closing when there are no windows available.
 app.on('window-all-closed', e => e.preventDefault() )
