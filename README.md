@@ -1,30 +1,22 @@
 # CatalinaScrobbler
-![preview](https://github.com/yungtry/CatalinaScrobbler/blob/master/test/screenshot.png?raw=true)
-
-🎵⭐ This application supports both Apple Music and iTunes scrobbling to Last.Fm
+![preview](https://github.com/yungtry/CatalinaScrobbler/blob/master/screenshot.png?raw=true)
+🎵⭐ This application supports scrobbling from both Apple Music and iTunes to Last.fm ⭐🎵
 
 ## 🔧 Running
 ### Automatic (pre-built)
 1. Download the latest release from here: https://github.com/yungtry/CatalinaScrobbler/releases
-2. Either double click the icon or run it from a terminal
-3. Login to your account and start scrobbling
+2. Double click the icon.
+3. Login to your account and start scrobbling.
 
 ### Manual
-#### GUI
 1. Clone the repository
 2. ```npm install```
 3. ```npm i electron -g```
-4. ```electron CatalinaScrobbler.js```
-5. (Optional) Convert it to an executable using electron-packager ```npm i electron-packager -g``` and then ```sh scripts/build.sh```
-
-#### CLI
-1. Clone the repository
-2. ```npm install```
-3. ```node CatalinaScrobbler-cli.js```
-4. (Optional) Convert it to an executable using nexe ```npm i nexe -g``` and then ```sh scripts/build-cli.sh```
+4. ```electron index.js```
+5. (Optional) Convert it to an executable using electron-packager ```npm i electron-packager -g``` and then ```sh build/build.sh```
 
 ## 🐛 Bugs and issues
-This repository consists of lot of bugs and issues and its code is ugly. I will try to maintain it for as longer as there is no other alternative.
+Feel free to report them in the issues tab.
 
 ## License
 This is free and unencumbered software released into the public domain.
