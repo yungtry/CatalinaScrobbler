@@ -1,6 +1,5 @@
 # CatalinaScrobbler
 ![preview](https://github.com/yungtry/CatalinaScrobbler/blob/master/screenshot.png?raw=true)
-
 🎵⭐ This application supports scrobbling from both Apple Music and iTunes to Last.fm ⭐🎵
 
 ## 🔧 Running
