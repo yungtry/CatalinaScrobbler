@@ -13,5 +13,5 @@ on run
 			end if
 		end tell
 	end if
-	return "{\"artist\":\"" & track_artist & "\", \"track\":\"" & track_name & "\", \"album\":\"" & track_album & "\", \"duration\": \"" & track_duration &"\"}"
+	return "{'artist':'" & track_artist & "', 'track': '" & track_name & "', 'album':'" & track_album & "', 'duration': '" & track_duration &"'}"
 end run
