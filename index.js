@@ -5,6 +5,7 @@ var win = require('./lib/window');
 app.on('ready', function() {
   if (process.platform === "darwin"){
     apple.detectPlayer().then(result => {
+      console.log("Player detected: "+result);
       apple.replacePlayer(result);
     }).catch(error => process.exit())
     if (apple.rememberUser() === false){
