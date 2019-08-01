@@ -1,5 +1,5 @@
 on run
-	set info to ""
+    set info to ""
     tell application id "com.apple.Music"
         if player state is paused then
             set playerStateText to "Paused"
