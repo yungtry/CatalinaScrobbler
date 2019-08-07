@@ -9,7 +9,8 @@
 ### Automatic (pre-built)
 1. Download the latest release from here: https://github.com/yungtry/CatalinaScrobbler/releases
 2. Double click the icon.
-3. Login to your account and start scrobbling.
+3. Allow the app to open in your Security & Privacy preferences.
+4. Login to your account and start scrobbling.
 
 ### Manual
 1. Clone the repository
