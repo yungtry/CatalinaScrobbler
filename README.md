@@ -1,3 +1,5 @@
+![](https://img.shields.io/github/package-json/v/yungtry/CatalinaScrobbler) ![](https://img.shields.io/github/release/yungtry/catalinascrobbler.svg) ![](https://img.shields.io/github/stars/yungtry/CatalinaScrobbler) ![](https://img.shields.io/github/last-commit/yungtry/catalinascrobbler) 
+
 # CatalinaScrobbler
 ![preview](https://github.com/yungtry/CatalinaScrobbler/blob/master/screenshot.png?raw=true)
 
