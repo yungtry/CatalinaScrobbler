@@ -21,6 +21,3 @@
 
 ## 🐛 Bugs and issues
 Feel free to report them in the issues tab.
-
-## License
-TBU
