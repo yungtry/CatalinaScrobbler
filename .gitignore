@@ -3,6 +3,7 @@ node_modules/
 CatalinaScrobbler-darwin-x64/
 CatalinaScrobbler-cli
 pass.txt
+assets/photon/*
 
 # Logs
 logs
