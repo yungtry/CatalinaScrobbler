@@ -13,7 +13,7 @@
 4. Login to your account and start scrobbling.
 
 ### Manual
-1. Clone the repository
+1. ```git clone --recursive https://github.com/yungtry/CatalinaScrobbler.git```
 2. ```npm install```
 3. ```npm i electron -g```
 4. ```electron index.js```
