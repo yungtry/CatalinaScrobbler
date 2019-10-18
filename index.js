@@ -13,7 +13,6 @@ app.on('ready', function() {
         });
         apple.detectPlayer().then(result => {
             console.log("Player detected: "+result);
-            apple.replacePlayer(result);
         }).catch(error => process.exit())
         if (apple.rememberUser() === false){
             app.emit('loginOpen');
