@@ -21,4 +21,5 @@
 
 ## 🐛 Bugs and issues
 ~~Feel free to report them in the issues tab.~~ 
+
 **Update:** As of January 2020, there are no plans to update this app anymore, since other big scrobblers have been updated to work with macOS Catalina and there are no major bugs in CatalinaScrobbler. Feel free to use my app anyway, if you like it more for some reason.
