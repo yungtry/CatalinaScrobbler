@@ -2,6 +2,7 @@
 
 # CatalinaScrobbler
 ![preview](https://github.com/yungtry/CatalinaScrobbler/blob/master/screenshot.png?raw=true)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyungtry%2FCatalinaScrobbler.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyungtry%2FCatalinaScrobbler?ref=badge_shield)
 
 🎵⭐ This application supports scrobbling from both Apple Music and iTunes to Last.fm ⭐🎵
 
@@ -23,3 +24,7 @@
 ~~Feel free to report them in the issues tab.~~ 
 
 **Update:** As of January 2020, there are no plans to update this app anymore, since other big scrobblers have been updated to work with macOS Catalina and there are no major bugs in CatalinaScrobbler. Feel free to use my app anyway, if you like it more for some reason.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fyungtry%2FCatalinaScrobbler.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fyungtry%2FCatalinaScrobbler?ref=badge_large)
